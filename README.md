@@ -1,4 +1,6 @@
 ## Multi-Step-Form 기능 요구사항
+#### [온보딩 Swagger API](https://onboarding-server-idpj.onrender.com/docs)
+
 
 ### 1. 온보딩 등록 폼 공통 요구사항
 
