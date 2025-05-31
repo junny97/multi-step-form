@@ -7,6 +7,7 @@
 <p align="center">
   <img src="example-form.gif" alt="example-form" />
 </p>
+
 ### 1. 온보딩 등록 폼 공통 요구사항
 
 - [ ] 4단계로 구성된 프로필 등록 폼 구현 (닉네임 → 성별 → 선호 장르 → 인생 영화 혹은 드라마)
