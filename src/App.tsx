@@ -1,8 +1,13 @@
+import { Routes, Route } from 'react-router-dom';
+import OnboardingPage from '@/pages/OnboardingPage';
+
 function App() {
   return (
-    <>
-      <h1>multi-step-form</h1>
-    </>
+    <div className='min-h-screen bg-gray-50'>
+      <Routes>
+        <Route path='/' element={<OnboardingPage />} />
+      </Routes>
+    </div>
   );
 }
 
