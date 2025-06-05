@@ -1,4 +1,5 @@
 import { useSearchParams, useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
 
 interface UseFunnelProps<T extends readonly string[]> {
   steps: T;
@@ -19,28 +20,27 @@ export function useFunnel<T extends readonly string[]>({
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
 
-  // URL에서 현재 스텝 추출 및 초기화
+  //  step 파라미터에 없는 값일 경우 첫 번째 스텝으로 초기 url 설정
+  useEffect(() => {
+    const urlStep = searchParams.get('step');
+    if (!urlStep) {
+      const newParams = new URLSearchParams(searchParams);
+      newParams.set('step', steps[0]);
+      navigate(`?${newParams.toString()}`, { replace: true });
+    }
+  }, [searchParams, steps, navigate]);
+
+  // 현재 스텝 가져오기
   const getCurrentStep = (): T[number] => {
     const urlStep = searchParams.get('step');
-
-    if (urlStep && steps.includes(urlStep)) {
-      return urlStep;
-    }
-
-    // URL에 유효한 step이 없으면 첫 번째 step으로 설정
-    const firstStep = steps[0];
-    const newParams = new URLSearchParams(searchParams);
-    newParams.set('step', firstStep);
-    navigate(`?${newParams.toString()}`, { replace: true });
-
-    return firstStep;
+    return urlStep && steps.includes(urlStep) ? urlStep : steps[0];
   };
 
   const currentStep = getCurrentStep();
   const stepIndex = steps.indexOf(currentStep);
   const totalSteps = steps.length;
 
-  // STEP URL 업데이트 함수
+  // step url 업데이트 함수
   const updateUrl = (step: string) => {
     const newParams = new URLSearchParams(searchParams);
     newParams.set('step', step);
