@@ -5,6 +5,9 @@ import {
   type FavoriteFormData,
   type OnboardingData,
 } from '../onboarding.type';
+import Button from '@/shared/components/Button';
+import Header from '@/shared/components/Header';
+import Input from '@/shared/components/Input';
 
 interface FavoriteStepProps {
   data: OnboardingData;
@@ -45,50 +48,35 @@ export default function FavoriteStep({
 
   return (
     <div className='card max-w-md mx-auto mt-10'>
-      <h2 className='text-2xl font-bold mb-6'>좋아하는 작품을 알려주세요</h2>
+      <Header>좋아하는 작품을 알려주세요</Header>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className='mb-6'>
-          <label
-            htmlFor='favorite_movie'
-            className='block text-sm font-medium mb-1'
-          >
-            작품 제목
-          </label>
-          <input
+          <Input
             id='favorite_movie'
-            className='input-field'
+            label='작품 제목'
             placeholder='좋아하는 작품 제목을 입력해주세요'
+            error={errors.favorite_movie?.message}
             {...register('favorite_movie')}
           />
-          {errors.favorite_movie && (
-            <p className='text-red-500 text-sm mt-1'>
-              {errors.favorite_movie.message}
-            </p>
-          )}
         </div>
 
         <div className='flex justify-between'>
-          <button
+          <Button
             type='button'
-            className='btn btn-secondary'
+            variant='secondary'
             onClick={onPrev}
             disabled={isSubmitting}
           >
             이전
-          </button>
-          <button
+          </Button>
+          <Button
             type='submit'
-            className={`btn ${
-              isSubmitting
-                ? 'btn-disabled'
-                : isValid
-                ? 'btn-primary'
-                : 'btn-disabled'
-            }`}
+            variant={isSubmitting || !isValid ? 'disabled' : 'primary'}
             disabled={isSubmitting || !isValid}
+            isLoading={isSubmitting}
           >
-            {isSubmitting ? '제출 중...' : '완료'}
-          </button>
+            완료
+          </Button>
         </div>
       </form>
     </div>

@@ -5,6 +5,9 @@ import {
   type GenderFormData,
   type OnboardingData,
 } from '../onboarding.type';
+import Button from '@/shared/components/Button';
+import Header from '@/shared/components/Header';
+import ErrorMessage from '@/shared/components/ErrorMessage';
 
 interface GenderStepProps {
   data: OnboardingData;
@@ -34,7 +37,7 @@ export default function GenderStep({ data, onNext, onPrev }: GenderStepProps) {
 
   return (
     <div className='card max-w-md mx-auto mt-10'>
-      <h2 className='text-2xl font-bold mb-6'>성별을 선택해주세요</h2>
+      <Header>성별을 선택해주세요</Header>
 
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className='mb-6'>
@@ -72,21 +75,21 @@ export default function GenderStep({ data, onNext, onPrev }: GenderStepProps) {
             </label>
           </div>
           {errors.gender && (
-            <p className='text-red-500 text-sm mt-2'>{errors.gender.message}</p>
+            <ErrorMessage message={errors.gender.message || ''} />
           )}
         </div>
 
         <div className='flex justify-between'>
-          <button type='button' className='btn btn-secondary' onClick={onPrev}>
+          <Button type='button' variant='secondary' onClick={onPrev}>
             이전
-          </button>
-          <button
+          </Button>
+          <Button
             type='submit'
-            className={`btn ${isValid ? 'btn-primary' : 'btn-disabled'}`}
+            variant={isValid ? 'primary' : 'disabled'}
             disabled={!isValid}
           >
             다음
-          </button>
+          </Button>
         </div>
       </form>
     </div>

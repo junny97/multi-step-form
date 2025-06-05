@@ -5,6 +5,9 @@ import {
   type NicknameFormData,
   type OnboardingData,
 } from '../onboarding.type';
+import Button from '@/shared/components/Button';
+import Header from '@/shared/components/Header';
+import Input from '@/shared/components/Input';
 
 interface NicknameStepProps {
   data: OnboardingData;
@@ -30,34 +33,27 @@ export default function NicknameStep({ data, onNext }: NicknameStepProps) {
 
   return (
     <div className='card max-w-md mx-auto mt-10'>
-      <h2 className='text-2xl font-bold mb-6'>닉네임을 입력해주세요</h2>
+      <Header>닉네임을 입력해주세요</Header>
 
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className='mb-6'>
-          <label htmlFor='nickname' className='block text-sm font-medium mb-1'>
-            닉네임
-          </label>
-          <input
+          <Input
             id='nickname'
-            className='input-field'
+            label='닉네임'
             placeholder='닉네임을 입력해주세요'
+            error={errors.nickname?.message}
             {...register('nickname')}
           />
-          {errors.nickname && (
-            <p className='text-red-500 text-sm mt-1'>
-              {errors.nickname.message}
-            </p>
-          )}
         </div>
 
         <div className='flex justify-end'>
-          <button
+          <Button
             type='submit'
-            className={`btn ${isValid ? 'btn-primary' : 'btn-disabled'}`}
+            variant={isValid ? 'primary' : 'disabled'}
             disabled={!isValid}
           >
             다음
-          </button>
+          </Button>
         </div>
       </form>
     </div>

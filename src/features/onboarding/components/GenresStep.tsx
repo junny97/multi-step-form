@@ -7,6 +7,9 @@ import {
   type OnboardingData,
 } from '../onboarding.type';
 import { AVAILABLE_GENRES } from '../onboarding.constant';
+import Button from '@/shared/components/Button';
+import Header from '@/shared/components/Header';
+import ErrorMessage from '@/shared/components/ErrorMessage';
 
 interface GenresStepProps {
   data: OnboardingData;
@@ -52,7 +55,7 @@ export default function GenresStep({ data, onNext, onPrev }: GenresStepProps) {
 
   return (
     <div className='card max-w-md mx-auto mt-10'>
-      <h2 className='text-2xl font-bold mb-6'>관심 장르를 선택해주세요</h2>
+      <Header>관심 장르를 선택해주세요</Header>
       <p className='text-gray-600 mb-4'>1개 이상 5개 이하로 선택해주세요</p>
 
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -74,25 +77,25 @@ export default function GenresStep({ data, onNext, onPrev }: GenresStepProps) {
             ))}
           </div>
           {errors.genre && (
-            <p className='text-red-500 text-sm mt-2'>{errors.genre.message}</p>
+            <ErrorMessage message={errors.genre.message || ''} />
           )}
         </div>
 
         <div className='flex justify-between'>
-          <button type='button' className='btn btn-secondary' onClick={onPrev}>
+          <Button type='button' variant='secondary' onClick={onPrev}>
             이전
-          </button>
-          <button
+          </Button>
+          <Button
             type='submit'
-            className={`btn ${
+            variant={
               selectedGenres.length > 0 && selectedGenres.length <= 5
-                ? 'btn-primary'
-                : 'btn-disabled'
-            }`}
+                ? 'primary'
+                : 'disabled'
+            }
             disabled={selectedGenres.length === 0 || selectedGenres.length > 5}
           >
             다음
-          </button>
+          </Button>
         </div>
       </form>
     </div>

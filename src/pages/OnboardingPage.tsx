@@ -10,6 +10,7 @@ import type {
   OnboardingData,
   OnboardingUserResponse,
 } from '@/features/onboarding/onboarding.type';
+import ProgressBar from '@/shared/components/ProgressBar';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -28,8 +29,6 @@ export default function OnboardingPage() {
     useFunnel({
       steps: STEPS,
     });
-
-  const progressPercentage = Math.round(((stepIndex + 1) / totalSteps) * 100);
 
   const handleStepComplete = (newData: Partial<OnboardingData>) => {
     setOnboardingData((prevData) => ({
@@ -57,20 +56,7 @@ export default function OnboardingPage() {
   return (
     <div className='min-h-screen bg-gray-50 py-8'>
       {/* 프로그레스 바 */}
-      <div className='max-w-md mx-auto mb-6'>
-        <div className='flex justify-between items-center mb-2'>
-          <span className='text-sm font-medium text-gray-700'>
-            {stepIndex + 1} / {totalSteps}
-          </span>
-          <span className='text-sm text-gray-500'>{progressPercentage}%</span>
-        </div>
-        <div className='w-full bg-gray-200 rounded-full h-2'>
-          <div
-            className='bg-blue-600 h-2 rounded-full transition-all duration-300'
-            style={{ width: `${progressPercentage}%` }}
-          />
-        </div>
-      </div>
+      <ProgressBar currentStep={stepIndex + 1} totalSteps={totalSteps} />
 
       <Funnel step={currentStep}>
         <Funnel.Step name='nickname'>
